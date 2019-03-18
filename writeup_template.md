@@ -22,8 +22,9 @@
 
 [//]: # (Image References)
 
-[image1]: ./misc/rover_image.jpg
-[image2]: ./calibration_images/example_grid1.jpg
+[image1]: ./misc/threshed_img.PNG
+# [image2]: ./output/test_mapping.mp4
+![output_video](./output/test_mapping.mp4)
 [image3]: ./calibration_images/example_rock1.jpg 
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
@@ -38,14 +39,21 @@ You're reading it!
 
 ### Notebook Analysis
 #### 1. Run the functions provided in the notebook on test images (first with the test data provided, next on data you have recorded). Add/modify functions to allow for color selection of obstacles and rock samples.
-Here is an example of how to include an image in your writeup.
+- Added the function `obj_thresh()` using OpenCV to get the gold color and "extract" the rock from the image
+- Modified the function `color_thresh()` with np.diter to get a half bottom of the image. With that, we can short the navigable terrain to closer to the camera and prevents the Rover to mark a navigable terrain area outside of the map. 
 
 ![alt text][image1]
 
 #### 1. Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
-And another! 
+- Modified `process_image()` adding points for perspective transform
+- Modified `perspective_transform()` adding mask a output to help removing undesired ares (as showed in "Project Demo Video"
+- Put on Red Channel the obstacles, on Green the Rock and on Blue the navigable terrain. Only add blue channel if have some data after `obj_thresh()`
 
-![alt text][image2]
+ 
+
+<video width="320" height="240" controls>
+  <source src="./output/test_mapping.mp4" type="video/mp4">
+</video>
 ### Autonomous Navigation and Mapping
 
 #### 1. Fill in the `perception_step()` (at the bottom of the `perception.py` script) and `decision_step()` (in `decision.py`) functions in the autonomous mapping scripts and an explanation is provided in the writeup of how and why these functions were modified as they were.
