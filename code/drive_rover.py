@@ -29,7 +29,7 @@ app = Flask(__name__)
 # Read in ground truth map and create 3-channel green version for overplotting
 # NOTE: images are read in by default with the origin (0, 0) in the upper left
 # and y-axis increasing downward.
-ground_truth = mpimg.imread('../calibration_images/map_bw.png')
+ground_truth = mpimg.imread('Projeto-Search_and_Sample_return\RoboND-Rover-Project\calibration_images\map_bw.png') 
 # This next line creates arrays of zeros in the red and blue channels
 # and puts the map into the green channel.  This is why the underlying 
 # map output looks green in the display image
@@ -59,8 +59,8 @@ class RoverState():
         # of navigable terrain pixels.  This is a very crude form of knowing
         # when you can keep going and when you should stop.  Feel free to
         # get creative in adding new fields or modifying these!
-        self.stop_forward = 50 # Threshold to initiate stopping
-        self.go_forward = 500 # Threshold to go forward again
+        self.stop_forward = 50 # Threshold to initiate stopping - Original 50
+        self.go_forward = 500 # Threshold to go forward again - Original 500
         self.max_vel = 2 # Maximum velocity (meters/second)
         # Image output from perception step
         # Update this image to display your intermediate analysis steps
@@ -77,6 +77,9 @@ class RoverState():
         self.near_sample = 0 # Will be set to telemetry value data["near_sample"]
         self.picking_up = 0 # Will be set to telemetry value data["picking_up"]
         self.send_pickup = False # Set to True to trigger rock pickup
+        self.rock_found = False # Flag to check if some rock was found and drive to Rock. False if got rock.
+        self.Rover_stuck_str_time = 0 # stuck start time to check how long time the Rover kept stuck
+        self.rover_yaw_loop = 0 # Number of 360º loops
 # Initialize our rover 
 Rover = RoverState()
 
@@ -99,7 +102,7 @@ def telemetry(sid, data):
         fps = frame_counter
         frame_counter = 0
         second_counter = time.time()
-    print("Current FPS: {}".format(fps))
+    ##print("Current FPS: {}".format(fps))
 
     if data:
         global Rover
