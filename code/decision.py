@@ -22,13 +22,13 @@ def decision_step(Rover):
             #Set Rover_stuck_str_time to first run
             elif Rover.vel < 0.2 and Rover.Rover_stuck_str_time == 0:
                 Rover.Rover_stuck_str_time = Rover.total_time
-                print("Set stuck_str_time as {}".format(Rover.Rover_stuck_str_time))
+                ##print("Set stuck_str_time as {}".format(Rover.Rover_stuck_str_time))
             
             #Check if Rover is stuck
             elif Rover.vel < 0.2 and (Rover.total_time - Rover.Rover_stuck_str_time) > 5:
                 #Set Rover mode as stuck and rotate rover to try unstuck
                 Rover.mode = 'stuck'
-                print("Rover stuck for {} seconds".format(Rover.total_time - Rover.Rover_stuck_str_time))
+                ##print("Rover stuck for {} seconds".format(Rover.total_time - Rover.Rover_stuck_str_time))
                 Rover.Rover_stuck_str_time = Rover.total_time
 
             # Check the extent of navigable terrain
@@ -52,7 +52,7 @@ def decision_step(Rover):
                     Rover.brake = Rover.brake_set
                     Rover.steer = 0
                     Rover.mode = 'stop'
-                    print("Rover Stoped due to low nav_angles")
+                    ##print("Rover Stoped due to low nav_angles")
             elif Rover.yaw > 0:
                 if Rover.yaw > 90:
                     if Rover.yaw > 180:
@@ -127,7 +127,7 @@ def decision_step(Rover):
 
         # If we're already in "get_rock" mode then drive to Rock and try to get it
         elif Rover.mode == 'get_rock':
-            print("Distance nav_dists: {}".format(np.mean(Rover.nav_dists)))
+            ##print("Distance nav_dists: {}".format(np.mean(Rover.nav_dists)))
             Rover.steer = np.clip(np.mean(Rover.nav_angles * 180/np.pi), -15, 15)
             if Rover.vel < Rover.max_vel:
                 # Set throttle value to throttle setting
@@ -140,10 +140,10 @@ def decision_step(Rover):
             if not Rover.near_sample:
                 if Rover.vel < 0.2 and Rover.Rover_stuck_str_time == 0:
                     Rover.Rover_stuck_str_time = Rover.total_time
-                    print("Set stuck_str_time as {}".format(Rover.Rover_stuck_str_time))
+                    ##print("Set stuck_str_time as {}".format(Rover.Rover_stuck_str_time))
                 elif Rover.vel < 0.2 and (Rover.total_time - Rover.Rover_stuck_str_time) > 5: # and not Rover.rock_found:
                     Rover.mode = 'stuck'
-                    print("Rover stuck for {} seconds".format(Rover.total_time - Rover.Rover_stuck_str_time))
+                    ##print("Rover stuck for {} seconds".format(Rover.total_time - Rover.Rover_stuck_str_time))
                     Rover.Rover_stuck_str_time = Rover.total_time
 
             # If Rock is near, stop and get it

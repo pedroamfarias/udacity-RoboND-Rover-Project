@@ -23,7 +23,7 @@ def color_thresh(img, rgb_thresh=(160, 160, 160)):
     # Return the binary image
     return color_select
 
-def obj_tresh(img, low_thresh=(20, 98, 76), high_tresh=(28, 255, 200)):
+def obj_thresh(img, low_thresh=(20, 98, 76), high_tresh=(28, 255, 200)):
     #hsv_thresh=(52, 98, 76)
     #hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     hsv = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
@@ -142,7 +142,7 @@ def perception_step(Rover):
     threshed = color_thresh(warped, rgb_thresh=(160, 160, 160))
     obs_map = np.absolute(np.float32(threshed) - 1) * mask    
     
-    rock_map = obj_tresh(warped)
+    rock_map = obj_thresh(warped)
     
     # 4) Update Rover.vision_image (this will be displayed on left side of screen)
         # Example: Rover.vision_image[:,:,0] = obstacle color-thresholded binary image
@@ -207,14 +207,11 @@ def perception_step(Rover):
         #get distance and angle of rock in rover_coords 
         dist_rock, angles_rock = to_polar_coords(rock_x, rock_y)
 
-        Rover.nav_dists = dist_rock
-        Rover.nav_angles = angles_rock
-        
-
     # 8) Convert rover-centric pixel positions to polar coordinates
     # Update Rover pixel distances and angles
-        # Rover.nav_dists = rover_centric_pixel_distances
-        # Rover.nav_angles = rover_centric_angles
+        Rover.nav_dists = dist_rock
+        Rover.nav_angles = angles_rock
+     
     elif not Rover.rock_found:        
         dist, angles = to_polar_coords(xpix, ypix)
         #mean_dir = np.mean(angles)
@@ -227,6 +224,6 @@ def perception_step(Rover):
     #Add blue channel to each coordenate that have navigable terrain 
     Rover.worldmap[y_world, x_world, 2] = 255
 
-    print("Rock found: {}   Rover Mode: {}  Samples Coll: {}   Samples Loc: {} rockmap.any(): {} Rover.nav_angles: {} Rover.vel: {}".format(Rover.rock_found, Rover.mode,
-         Rover.samples_collected, Rover.samples_located, rock_map.any(), len(Rover.nav_angles), Rover.vel ))
+    #print("Rock found: {}   Rover Mode: {}  Samples Coll: {}   Samples Loc: {} rockmap.any(): {} Rover.nav_angles: {} Rover.vel: {}".format(Rover.rock_found, Rover.mode,
+    #     Rover.samples_collected, Rover.samples_located, rock_map.any(), len(Rover.nav_angles), Rover.vel ))
     return Rover
