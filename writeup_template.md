@@ -24,7 +24,7 @@
 
 [image1]: ./misc/threshed_img.PNG
 
-[image3]: ./calibration_images/example_rock1.jpg 
+[image3]: ./misc/autonomous_mode.PNG
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
